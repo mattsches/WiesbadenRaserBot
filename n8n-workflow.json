@@ -1,0 +1,107 @@
+{
+  "name": "WiesbadenRaserBot",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        240,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://traffic.ls.hereapi.com/traffic/6.3/flow.json?bbox=50.069068,8.208654;50.086831,8.263328&apiKey=<YOUR_API_KEY>",
+        "options": {}
+      },
+      "name": "Here Traffic Flow Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        490,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "interval": 10,
+        "unit": "minutes"
+      },
+      "name": "Interval",
+      "type": "n8n-nodes-base.interval",
+      "typeVersion": 1,
+      "position": [
+        240,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const SPEED_LIMIT = 55;\nconst CONFIDENCE_LIMIT = 0.7;\nconst dateTimeOptions = {\n    timeZone: \"Europe/Berlin\",\n    hour: \"numeric\",\n    minute: \"numeric\",\n    day: \"numeric\",\n    month: \"numeric\",\n    year: \"numeric\"\n}\n\nconst rules = {\n    \"B54\": { // 1. Ring\n        \"Siegfriedring\": {\n            \"+\": null,\n            \"-\": null,\n        },\n        \"Berliner Straße\": {\n            \"+\": null,\n            \"-\": null,\n        },\n        \"Mainzer Straße\": {\n            \"+\": \"1. Ring (Richtung Stadion) bei Mainzer Straße\",\n            \"-\": \"1. Ring (Richtung Hbf) bei Mainzer Straße\",\n        },\n        \"Biebricher Allee\": {\n            \"+\": \"1. Ring (Richtung Hbf) bei Biebricher Allee\",\n            \"-\": \"1. Ring (Richtung Schiersteiner Straße) bei Biebricher Allee\",\n        },\n        \"Schiersteiner Straße\": {\n            \"+\": \"1. Ring (Richtung Hbf) bei Schiersteiner Straße\",\n            \"-\": \"1. Ring (Richtung Ringkirche) bei Schiersteiner Straße\",\n        },\n        \"Rheinstraße\": {\n            \"+\": \"1. Ring (Richtung Hbf) bei Rheinstraße\",\n            \"-\": \"1. Ring (Richtung Sedanplatz) bei Rheinstraße\",\n        },\n        \"Sedanplatz\": {\n            \"+\": \"1. Ring (Richtung Ringkirche) bei Sedanplatz\",\n            \"-\": \"1. Ring (Richtung Dürerplatz) bei Sedanplatz\",\n        },\n        \"Dürerplatz\": {\n            \"+\": \"Aarstraße (Richtung ↘)\",\n            \"-\": \"Aarstraße (Richtung ↖)\",\n        },\n        \"Einmündung zur B417/Fischzucht\": {\n            \"+\": null,\n            \"-\": null,\n        },\n    },\n    \"B417\": { //Dürerstraße, Unter den Eichen\n        \"Dürerplatz\": {\n            \"+\": \"Albrecht-Dürer-Straße (Richtung ⬇) bei 1. Ring\",\n            \"-\": \"Albrecht-Dürer-Straße (Richtung ⬆) bei 1. Ring\",\n        },\n        \"Nordfriedhof\": {\n            \"+\": \"Unter den Eichen (Richtung ⬇) bei Platter Straße\",\n            \"-\": \"Unter den Eichen (Richtung ⬆) bei Platter Straße\",\n        },\n    },\n    \"B263\": { // Mainzer Straße\n        \"Gustav-Stresemann-Ring\": {\n            \"+\": \"Mainzer Straße (Richtung ⬆) bei 1. Ring\",\n            \"-\": \"Mainzer Straße (Richtung ⬇) bei 1. Ring\",\n        },\n        \"Siegfriedring\": {\n            \"+\": \"Mainzer Straße (Richtung ⬆) bei 2. Ring\",\n            \"-\": \"Mainzer Straße (Richtung ⬇) bei 2. Ring\",\n        },\n    },\n    \"Kurt-Schumacher-Ring Konrad Adenauer-Ring\": { // 2. Ring\n        \"Biebricher Allee\": {\n            \"+\": \"2. Ring (Richtung ⬅) bei Biebricher Allee\",\n            \"-\": \"2. Ring (Richtung ➡) bei Biebricher Allee\",\n        },\n        \"Schirsteiner Straße\": {\n            \"+\": \"2. Ring (Richtung ⬅) bei Schiersteiner Straße\",\n            \"-\": \"2. Ring (Richtung ➡) bei Schiersteiner Straße\",\n        },\n        \"Dotzheimer Straße\": {\n            \"+\": \"2. Ring (Richtung ⬅) bei Dotzheimer Straße\",\n            \"-\": \"2. Ring (Richtung ➡) bei Dotzheimer Straße\",\n        },\n        \"Klarenthaler Straße\": {\n            \"+\": \"2. Ring (Richtung ⬅) bei Klarenthaler Straße\",\n            \"-\": \"2. Ring (Richtung ➡) bei Klarenthaler Straße\",\n        },\n        \"Dürerplatz\": {\n            \"+\": \"2. Ring (Richtung ⬅) bei Dürerplatz\",\n            \"-\": \"2. Ring (Richtung ➡) bei Dürerplatz\",\n        },\n    },\n    \"Schiersteiner Straße\": {\n        \"Kaiser-Friedrich-Ring\": {\n            \"+\": \"Schiersteiner Straße (Richtung ⬇) bei 1. Ring\",\n            \"-\": \"Schiersteiner Straße (Richtung ⬆) bei 1. Ring\"\n        },\n        \"Konrad-Adenauer-Ring\": {\n            \"+\": \"Schiersteiner Straße (Richtung ⬇) bei 2. Ring\",\n            \"-\": \"Schiersteiner Straße (Richtung ⬆) bei 2. Ring\"\n        },\n        \"Anschluss Schiersteiner Straße\": {\n            \"+\": null,\n            \"-\": null\n        },\n    },\n    \"K643\": { // Biebricher Allee\n        \"Kaiser-Friedrich-Ring\": {\n            \"+\": \"Biebricher Allee (Richtung ⬆) bei 1. Ring\",\n            \"-\": \"Biebricher Allee (Richtung ⬇) bei 1. Ring\"\n        },\n        \"Konrad-Adenauer-Ring\": {\n            \"+\": \"Biebricher Allee (Richtung ⬆) bei 2. Ring\",\n            \"-\": \"Biebricher Allee (Richtung ⬇) bei 2. Ring\"\n        },\n    },\n    \"K647\": { // // Sonnenberger Straße, Coulinstraße, Emser Straße, Lahnstraße\n        \"In der Dietenmühle\": {\n            \"+\": \"Sonnenberger Straße (Richtung ⬅) in Sonnenberg\",\n            \"-\": \"Sonnenberger Straße (Richtung ➡) in Sonnenberg\"\n        },\n        \"Sonnenberger Straße\": {\n            \"+\": \"Sonnenberger Straße (Richtung ⬅)\",\n            \"-\": \"Sonnenberger Straße (Richtung ➡)\"\n        },\n        \"Wilhelmstraße\": {\n            \"+\": \"Sonnenberger Straße (Richtung ⬅) bei Wilhelmstraße\",\n            \"-\": \"Sonnenberger Straße (Richtung ➡) bei Wilhelmstraße\"\n        },\n        \"Schwalbacher Straße\": {\n            \"+\": \"Coulinstraße (Richtung ⬅) bei Schwalbacher Straße\",\n            \"-\": \"Coulinstraße (Richtung ➡) bei Schwalbacher Straße\"\n        },\n        \"Dürerplatz\": {\n            \"+\": \"Emser Straße (Richtung ⬅)\",\n            \"-\": \"Emser Straße (Richtung ➡)\"\n        },\n        \"Klarenthaler Straße\": {\n            \"+\": \"Lahnstraße (Richtung ⬅)\",\n            \"-\": \"Lahnstraße (Richtung ➡)\"\n        },\n    },\n    \"L3037\": { // Klarenthaler, Rheinstraße, Frankfurter, Berliner\n        \"Lahnstraße\": {\n            \"+\": \"Klarenthaler Straße (Richtung ➡) bei Lahnstraße\",\n            \"-\": \"Klarenthaler Straße (Richtung ⬅) bei Lahnstraße\"\n        },\n        \"Kurt-Schumacher-Ring\": {\n            \"+\": \"Klarenthaler Straße (Richtung ➡) bei 2. Ring\",\n            \"-\": \"Klarenthaler Straße (Richtung ⬅) bei 2. Ring\"\n        },\n        \"Kaiser-Friedrich-Ring\": {\n            \"+\": \"Klarenthaler Straße (Richtung ➡) bei 1. Ring\",\n            \"-\": \"Rheinstraße (Richtung ⬅) bei 1. Ring\"\n        },\n        \"Oranienstraße\": {\n            \"+\": \"Rheinstraße (Richtung ➡) bei Oranienstraße\",\n            \"-\": \"Rheinstraße (Richtung ⬅) bei Oranienstraße\"\n        },\n        \"Friedrich-Ebert-Allee\": {\n            \"+\": \"Rheinstraße (Richtung ➡) bei Friedrich-Ebert-Allee\",\n            \"-\": \"Rheinstraße (Richtung ⬅) bei Friedrich-Ebert-Allee\"\n        },\n        \"Frankfurter Straße\": {\n            \"+\": \"Frankfurter Straße (Richtung ➡)\",\n            \"-\": \"Frankfurter Straße (Richtung ⬅)\"\n        },\n        \"New-York-Straße\": {\n            \"+\": null,\n            \"-\": \"Berliner Straße (Richtung ⬅) bei New-York-Straße\"\n        },\n        \"Siegfriedring\": {\n            \"+\": null,\n            \"-\": null\n        },\n    }\n}\n\nfunction isValid(roadWay, flowItem) {\n    if (flowItem.CF[0].SU <= SPEED_LIMIT) {\n        return false;\n    }\n    if (flowItem.CF[0].CN <= CONFIDENCE_LIMIT) {\n        return false;\n    }\n    if (!Object.keys(rules).includes(roadWay.DE)) {\n        console.log('Unknown/excluded road ' + roadWay.DE);\n        return false;\n    }\n    if (!Object.keys(rules[roadWay.DE]).includes(flowItem.TMC.DE)) {\n        console.log('Unknown/excluded intersection ' + roadWay.DE + '/' + flowItem.TMC.DE);\n        return false;\n    }\n    if (rules[roadWay.DE][flowItem.TMC.DE][flowItem.TMC.QD] == null) {\n        console.log('Excluded ' + roadWay.DE + '/' + flowItem.TMC.DE + ' in direction ' + flowItem.TMC.QD);\n        return false;\n    }\n    return true;\n}\n\nlet data = [];\nfor (let roadWay of items[0].json.RWS[0].RW) {\n    for (let flowItem of roadWay.FIS[0].FI) {\n        if (!isValid(roadWay, flowItem)) {\n            continue;\n        }\n        let timeOutput = new Date(Date.parse(roadWay.PBT));\n        data.push({\n            json: {\n                name: flowItem.TMC.DE,\n                speed: flowItem.CF[0].SU,\n                parent_name: roadWay.DE,\n                tmc_id: flowItem.TMC.PC,\n                time: timeOutput.toLocaleString('de-DE', dateTimeOptions),\n                description: rules[roadWay.DE][flowItem.TMC.DE][flowItem.TMC.QD]\n            }\n        });\n    }\n}\n\nreturn data;\n"
+      },
+      "name": "Filter and transform data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        740,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "text": "={{$json[\"time\"]}} Uhr: Überhöhte Geschwindkeit von {{$json[\"speed\"]}} km/h auf {{$json[\"description\"]}}\n#SpeederBot #RaserWiesbaden #WiesbadenSpeedWatch",
+        "additionalFields": {}
+      },
+      "name": "Twitter",
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 1,
+      "position": [
+        990,
+        280
+      ],
+      "credentials": {
+        "twitterOAuth1Api": "WiesbadenRaser"
+      }
+    }
+  ],
+  "connections": {
+    "Here Traffic Flow Request": {
+      "main": [
+        [
+          {
+            "node": "Filter and transform data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interval": {
+      "main": [
+        [
+          {
+            "node": "Here Traffic Flow Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter and transform data": {
+      "main": [
+        [
+          {
+            "node": "Twitter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "id": 4
+}
