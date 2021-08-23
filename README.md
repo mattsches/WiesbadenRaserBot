@@ -6,6 +6,8 @@ This is a Twitter bot that runs on the [n8n](https://n8n.io) platform.
 The bot reports speeding violations of vehicles in [Wiesbaden, Germany](https://en.wikipedia.org/wiki/Wiesbaden).
 Reported speeds are based on the data requested from the [HERE Traffic API](https://developer.here.com/documentation/traffic/dev_guide/topics/what-is.html).
 
+Find more information (in German) in this blog post: ["Ein Bot, der Raser in Wiesbaden twittert"](https://blog.sperrobjekt.de/content/1000544-Ein-Bot,-der-Raser-in-Wiesbaden-twittert.html)
+
 ## How it works
 Basically, the bot consists of a three-step process:
 1) First, so-called `Traffic Flow data` for the area of Wiesbaden is requested from the HERE Traffic API.
