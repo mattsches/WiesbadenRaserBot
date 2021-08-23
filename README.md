@@ -12,6 +12,8 @@ Basically, the bot consists of a three-step process:
 2) Subsequently, the data is validated, filtered and mapped (road names, speed limits etc.) based on local conditions.
 3) Finally, any speeds exceeding the speed limit (plus a 10 % margin) are posted to [Twitter](https://twitter.com/WiesbadenRaser).
 
+![n8n Workflow Screenshot](./n8n-workflow-schema.png)
+
 ## Set up your own bot
 
 tbd
