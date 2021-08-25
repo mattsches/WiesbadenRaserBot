@@ -10,170 +10,120 @@ const dateTimeOptions = {
 }
 
 const rules = {
-    "B54": { // 1. Ring
-        "Siegfriedring": {
-            "+": null,
-            "-": null,
-        },
-        "Berliner Straße": {
-            "+": null,
-            "-": null,
-        },
-        "Mainzer Straße": {
-            "+": "1. Ring (Richtung Stadion) bei Mainzer Straße",
-            "-": "1. Ring (Richtung Hbf) bei Mainzer Straße",
-        },
-        "Biebricher Allee": {
-            "+": "1. Ring (Richtung Hbf) bei Biebricher Allee",
-            "-": "1. Ring (Richtung Schiersteiner Straße) bei Biebricher Allee",
-        },
-        "Schiersteiner Straße": {
-            "+": "1. Ring (Richtung Hbf) bei Schiersteiner Straße",
-            "-": "1. Ring (Richtung Ringkirche) bei Schiersteiner Straße",
-        },
-        "Rheinstraße": {
-            "+": "1. Ring (Richtung Hbf) bei Rheinstraße",
-            "-": "1. Ring (Richtung Sedanplatz) bei Rheinstraße",
-        },
-        "Sedanplatz": {
-            "+": "1. Ring (Richtung Ringkirche) bei Sedanplatz",
-            "-": "1. Ring (Richtung Dürerplatz) bei Sedanplatz",
-        },
-        "Dürerplatz": {
-            "+": "Aarstraße (Richtung ↘)",
-            "-": "Aarstraße (Richtung ↖)",
-        },
-        "Einmündung zur B417/Fischzucht": {
-            "+": null,
-            "-": null,
-        },
+    "D01+50414": { // B54 Berliner Straße, 1. Ring, Aarstraße
+        24314: null,
+        37120: null,
+        24315: "1. Ring zwischen Berliner Straße und Mainzer Straße",
+        37121: "1. Ring zwischen Mainzer Straße und Biebricher Allee",
+        24316: "1. Ring zwischen Biebricher Allee und Schiersteiner Straße",
+        36710: "1. Ring zwischen Schiersteiner Straße und Ringkirche",
+        37122: "1. Ring zwischen Ringkirche und Sedanplatz",
+        37123: "Seerobenstraße zwischen Sedanplatz und Dürerplatz",
+        36347: null,
     },
-    "B417": { //Dürerstraße, Unter den Eichen
-        "Dürerplatz": {
-            "+": "Albrecht-Dürer-Straße (Richtung ⬇) bei 1. Ring",
-            "-": "Albrecht-Dürer-Straße (Richtung ⬆) bei 1. Ring",
-        },
-        "Nordfriedhof": {
-            "+": "Unter den Eichen (Richtung ⬇) bei Platter Straße",
-            "-": "Unter den Eichen (Richtung ⬆) bei Platter Straße",
-        },
+    "D01-50414": { // B54 Aarstraße, 1. Ring, Berliner Straße
+        24314: null,
+        37120: "1. Ring zwischen Mainzer Straße und Berliner Straße",
+        24315: "1. Ring zwischen Biebricher Allee und Mainzer Straße",
+        37121: "1. Ring zwischen Schiersteiner Straße und Biebricher Allee",
+        24316: "1. Ring zwischen Ringkirche und Schiersteiner Straße",
+        36710: "1. Ring zwischen Sedanplatz und Ringkirche",
+        37122: "Seerobenstraße zwischen Dürerplatz und Sedanplatz",
+        37123: null,
+        36347: null,
     },
-    "B263": { // Mainzer Straße
-        "Gustav-Stresemann-Ring": {
-            "+": "Mainzer Straße (Richtung ⬆) bei 1. Ring",
-            "-": "Mainzer Straße (Richtung ⬇) bei 1. Ring",
-        },
-        "Siegfriedring": {
-            "+": "Mainzer Straße (Richtung ⬆) bei 2. Ring",
-            "-": "Mainzer Straße (Richtung ⬇) bei 2. Ring",
-        },
+    "D01+50529": { // B417 stadtauswärts
+        37381: null,
+        37036: "Unter den Eichen/Schützenstraße/Dürer-Straße Richtung Nordfriedhof",
+        26094: null
     },
-    "Kurt-Schumacher-Ring Konrad Adenauer-Ring": { // 2. Ring
-        "Biebricher Allee": {
-            "+": "2. Ring (Richtung ⬅) bei Biebricher Allee",
-            "-": "2. Ring (Richtung ➡) bei Biebricher Allee",
-        },
-        "Schirsteiner Straße": {
-            "+": "2. Ring (Richtung ⬅) bei Schiersteiner Straße",
-            "-": "2. Ring (Richtung ➡) bei Schiersteiner Straße",
-        },
-        "Dotzheimer Straße": {
-            "+": "2. Ring (Richtung ⬅) bei Dotzheimer Straße",
-            "-": "2. Ring (Richtung ➡) bei Dotzheimer Straße",
-        },
-        "Klarenthaler Straße": {
-            "+": "2. Ring (Richtung ⬅) bei Klarenthaler Straße",
-            "-": "2. Ring (Richtung ➡) bei Klarenthaler Straße",
-        },
-        "Dürerplatz": {
-            "+": "2. Ring (Richtung ⬅) bei Dürerplatz",
-            "-": "2. Ring (Richtung ➡) bei Dürerplatz",
-        },
+    "D01-50529": { // B417 stadteinwärts
+        37381: null,
+        37036: null,
+        26094: "Unter den Eichen/Schützenstraße/Dürer-Straße Richtung Dürerplatz"
     },
-    "Schiersteiner Straße": {
-        "Kaiser-Friedrich-Ring": {
-            "+": "Schiersteiner Straße (Richtung ⬇) bei 1. Ring",
-            "-": "Schiersteiner Straße (Richtung ⬆) bei 1. Ring"
-        },
-        "Konrad-Adenauer-Ring": {
-            "+": "Schiersteiner Straße (Richtung ⬇) bei 2. Ring",
-            "-": "Schiersteiner Straße (Richtung ⬆) bei 2. Ring"
-        },
-        "Anschluss Schiersteiner Straße": {
-            "+": null,
-            "-": null
-        },
+    "D01+37364": { // B263 Mainzer Straße stadtauswärts
+        37365: null,
+        37366: "Mainzer Straße zwischen 1. Ring und 2. Ring",
+        37367: null
     },
-    "K643": { // Biebricher Allee
-        "Kaiser-Friedrich-Ring": {
-            "+": "Biebricher Allee (Richtung ⬆) bei 1. Ring",
-            "-": "Biebricher Allee (Richtung ⬇) bei 1. Ring"
-        },
-        "Konrad-Adenauer-Ring": {
-            "+": "Biebricher Allee (Richtung ⬆) bei 2. Ring",
-            "-": "Biebricher Allee (Richtung ⬇) bei 2. Ring"
-        },
+    "D01-37364": { // B263 Mainzer Straße stadteinwärts
+        37365: "Mainzer Straße zwischen 2. Ring und 1. Ring",
+        37366: "Mainzer Straße zwischen A66 und 2. Ring",
+        37367: null
     },
-    "K647": { // // Sonnenberger Straße, Coulinstraße, Emser Straße, Lahnstraße
-        "In der Dietenmühle": {
-            "+": "Sonnenberger Straße (Richtung ⬅) in Sonnenberg",
-            "-": "Sonnenberger Straße (Richtung ➡) in Sonnenberg"
-        },
-        "Sonnenberger Straße": {
-            "+": "Sonnenberger Straße (Richtung ⬅)",
-            "-": "Sonnenberger Straße (Richtung ➡)"
-        },
-        "Wilhelmstraße": {
-            "+": "Sonnenberger Straße (Richtung ⬅) bei Wilhelmstraße",
-            "-": "Sonnenberger Straße (Richtung ➡) bei Wilhelmstraße"
-        },
-        "Schwalbacher Straße": {
-            "+": "Coulinstraße (Richtung ⬅) bei Schwalbacher Straße",
-            "-": "Coulinstraße (Richtung ➡) bei Schwalbacher Straße"
-        },
-        "Dürerplatz": {
-            "+": "Emser Straße (Richtung ⬅)",
-            "-": "Emser Straße (Richtung ➡)"
-        },
-        "Klarenthaler Straße": {
-            "+": "Lahnstraße (Richtung ⬅)",
-            "-": "Lahnstraße (Richtung ➡)"
-        },
+    "D01+36353": { // 2. Ring Dürerplatz -> Biebricher Allee
+        36354: "2. Ring zwischen Dürerplatz und Waterloostraße",
+        36355: "2. Ring zwischen Waterloostraße und Klarenthaler Straße",
+        36356: "2. Ring zwischen Klarenthaler Straße und Dotzheimer Straße",
+        36357: "2. Ring zwischen Dotzheimer Straße und Schiersteiner Straße",
+        36358: "2. Ring zwischen Schiersteiner Straße und Biebricher Allee",
     },
-    "L3037": { // Klarenthaler, Rheinstraße, Frankfurter, Berliner
-        "Lahnstraße": {
-            "+": "Klarenthaler Straße (Richtung ➡) bei Lahnstraße",
-            "-": "Klarenthaler Straße (Richtung ⬅) bei Lahnstraße"
-        },
-        "Kurt-Schumacher-Ring": {
-            "+": "Klarenthaler Straße (Richtung ➡) bei 2. Ring",
-            "-": "Klarenthaler Straße (Richtung ⬅) bei 2. Ring"
-        },
-        "Kaiser-Friedrich-Ring": {
-            "+": "Klarenthaler Straße (Richtung ➡) bei 1. Ring",
-            "-": "Rheinstraße (Richtung ⬅) bei 1. Ring"
-        },
-        "Oranienstraße": {
-            "+": "Rheinstraße (Richtung ➡) bei Oranienstraße",
-            "-": "Rheinstraße (Richtung ⬅) bei Oranienstraße"
-        },
-        "Friedrich-Ebert-Allee": {
-            "+": "Rheinstraße (Richtung ➡) bei Friedrich-Ebert-Allee",
-            "-": "Rheinstraße (Richtung ⬅) bei Friedrich-Ebert-Allee"
-        },
-        "Frankfurter Straße": {
-            "+": "Frankfurter Straße (Richtung ➡)",
-            "-": "Frankfurter Straße (Richtung ⬅)"
-        },
-        "New-York-Straße": {
-            "+": null,
-            "-": "Berliner Straße (Richtung ⬅) bei New-York-Straße"
-        },
-        "Siegfriedring": {
-            "+": null,
-            "-": null
-        },
-    }
+    "D01-36353": { // 2. Ring Biebricher Allee -> Dürerplatz
+        36354: "2. Ring zwischen Klarenthaler Straße und Dürerplatz",
+        36355: "2. Ring zwischen Dotzheimer Straße und Klarenthaler Straße",
+        36356: "2. Ring zwischen Schiersteiner Straße und Dotzheimer Straße",
+        36357: "2. Ring zwischen Biebricher Allee und Schiersteiner Straße",
+        36358: null,
+    },
+    "D01+36343": { // Schiersteiner Straße stadteinwärts
+        36344: null,
+        36345: "Schiersteiner Straße zwischen Waldstraße und 2. Ring",
+        36346: "Schiersteiner Straße zwischen 2. Ring und 1. Ring",
+    },
+    "D01-36343": { // Schiersteiner Straße stadtauswärts
+        36344: "Schiersteiner Straße zwischen 2. Ring und Waldstraße",
+        36345: "Schiersteiner Straße zwischen 1. Ring und 2. Ring",
+        36346: null,
+    },
+    "D01+36317": { // Biebricher Allee stadtauswärts
+        36318: null,
+        36319: "Biebricher Allee zwischen 1. Ring und 2. Ring",
+        36320: "Biebricher Allee zwischen 2. Ring und A66",
+    },
+    "D01-36317": { // Biebricher Allee stadteinwärts
+        36318: "Biebricher Allee zwischen 2. Ring und 1. Ring",
+        36319: "Biebricher Allee zwischen A66 und 2. Ring",
+        36320: "Biebricher Allee zwischen Äppelallee und A66",
+    },
+    "D01+36323": { //"K647" West -> Ost
+        36324: null,
+        36325: "Lahnstraße zwischen Dürerplatz und Klarenthaler Straße",
+        36326: "Emser Straße zwischen Dürerplatz und Schwalbacher Straße",
+        36327: "Webergasse/Coulinstraße zwischen Schwalbacher Straße und Wilhelmstraße",
+        36328: "Wilhelmstraße zwischen Staatstheater und Kureck",
+        36329: "Sonnenberger Straße zwischen Wilhelmstraße und In der Dietenmühle",
+        36330: "Danziger Straße zwischen In der Dietenmühle und Sonnenberg",
+    },
+    "D01-36323": { //"K647" Ost -> West
+        36324: "Lahnstraße zwischen Dürerplatz und Klarenthaler Straße",
+        36325: "Emser Straße zwischen Schwalbacher Straße und Dürerplatz",
+        36326: "Webergasse/Coulinstraße zwischen Wilhelmstraße und Schwalbacher Straße",
+        36327: "Wilhelmstraße zwischen Kureck und Staatstheater",
+        36328: "Sonnenberger Straße zwischen In der Dietenmühle und Wilhelmstraße",
+        36329: "Danziger Straße zwischen Sonnenberg und In der Dietenmühle",
+        36330: null,
+    },
+    "D01-37369": { //"L3037" Ost -> West
+        37373: "Klarenthaler Straße zwischen 2. Ring und Lahnstraße",
+        37374: "Klarenthaler Straße zwischen Ringkirche und 2. Ring",
+        37375: "Rheinstraße zwischen Oranienstraße und Ringkirche",
+        37376: "Rheinstraße zwischen Friedrich-Ebert-Allee und Oranienstraße",
+        37377: "Rheinstraße zwischen Frankfurter Straße und Friedrich-Ebert-Allee",
+        37378: "Frankfurter Straße zwischen Stadion und Rheinstraße",
+        37379: null,
+        37380: null,
+    },
+    "D01+37369": { //"L3037" West -> Ost
+        37373: null,
+        37374: "Klarenthaler Straße zwischen Lahnstraße und 2. Ring",
+        37375: "Klarenthaler Straße zwischen 2. Ring und Ringkirche",
+        37376: "Rheinstraße zwischen Ringkirche und Oranienstraße",
+        37377: "Rheinstraße zwischen Oranienstraße und Friedrich-Ebert-Allee",
+        37378: "Rheinstraße zwischen Friedrich-Ebert-Allee und Frankfurter Straße",
+        37379: "Frankfurter Straße zwischen Rheinstraße und Stadion",
+        37380: null,
+    },
 }
 
 function isValid(roadWay, flowItem) {
@@ -183,16 +133,12 @@ function isValid(roadWay, flowItem) {
     if (flowItem.CF[0].CN <= CONFIDENCE_LIMIT) {
         return false;
     }
-    if (!Object.keys(rules).includes(roadWay.DE)) {
-        console.log('Unknown/excluded road ' + roadWay.DE);
+    if (!Object.keys(rules).includes(roadWay.LI)) {
+        console.log('Unknown/excluded road ' + roadWay.LI);
         return false;
     }
-    if (!Object.keys(rules[roadWay.DE]).includes(flowItem.TMC.DE)) {
-        console.log('Unknown/excluded intersection ' + roadWay.DE + '/' + flowItem.TMC.DE);
-        return false;
-    }
-    if (rules[roadWay.DE][flowItem.TMC.DE][flowItem.TMC.QD] == null) {
-        console.log('Excluded ' + roadWay.DE + '/' + flowItem.TMC.DE + ' in direction ' + flowItem.TMC.QD);
+    if (rules[roadWay.LI][flowItem.TMC.PC] === undefined || rules[roadWay.LI][flowItem.TMC.PC] === null) {
+        console.log('Unknown/excluded segment ' + roadWay.LI + '/' + flowItem.TMC.PC);
         return false;
     }
     return true;
@@ -210,9 +156,10 @@ for (let roadWay of items[0].json.RWS[0].RW) {
                 name: flowItem.TMC.DE,
                 speed: flowItem.CF[0].SU,
                 parent_name: roadWay.DE,
+                road_id: roadWay.LI,
                 tmc_id: flowItem.TMC.PC,
                 time: timeOutput.toLocaleString('de-DE', dateTimeOptions),
-                description: rules[roadWay.DE][flowItem.TMC.DE][flowItem.TMC.QD]
+                description: rules[roadWay.LI][flowItem.TMC.PC]
             }
         });
     }
