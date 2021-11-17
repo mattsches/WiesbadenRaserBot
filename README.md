@@ -1,5 +1,7 @@
 # WiesbadenRaserBot
 
+[![Join the chat at https://gitter.im/RaserBot/community](https://badges.gitter.im/RaserBot/community.svg)](https://gitter.im/RaserBot/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <img alt="A tachometer with the coat of arms of Wiesbaden in it" height="200" src="./twitter_avatar.png" title="Twitter avatar of the bot" width="200"/>
 
 This is a Twitter bot that runs on the [n8n](https://n8n.io) platform.
