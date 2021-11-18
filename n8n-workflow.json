@@ -8,20 +8,20 @@
       "typeVersion": 1,
       "position": [
         240,
-        80
+        150
       ]
     },
     {
       "parameters": {
-        "url": "https://traffic.ls.hereapi.com/traffic/6.3/flow.json?bbox=50.0962,8.1998;50.0545,8.2736&apiKey=<YOUR_API_KEY>",
+        "url": "https://traffic.ls.hereapi.com/traffic/6.3/flow.json?bbox=50.1097,8.1922;50.0466,8.2781&apiKey=<YOUR_API_KEY>",
         "options": {}
       },
       "name": "Here Traffic Flow Request",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        490,
-        280
+        500,
+        300
       ]
     },
     {
@@ -34,35 +34,57 @@
       "typeVersion": 1,
       "position": [
         240,
-        280
+        300
       ]
     },
     {
       "parameters": {
-        "functionCode": "const SPEED_LIMIT = 55;\nconst CONFIDENCE_LIMIT = 0.7;\nconst dateTimeOptions = {\n    timeZone: \"Europe/Berlin\",\n    hour: \"numeric\",\n    minute: \"numeric\",\n    day: \"numeric\",\n    month: \"numeric\",\n    year: \"numeric\"\n}\n\nconst rules = {\n    \"D01+50414\": { // B54 Berliner Straße, 1. Ring, Aarstraße\n        24314: null,\n        37120: null,\n        24315: \"1. Ring zwischen Berliner Straße und Mainzer Straße\",\n        37121: \"1. Ring zwischen Mainzer Straße und Biebricher Allee\",\n        24316: \"1. Ring zwischen Biebricher Allee und Schiersteiner Straße\",\n        36710: \"1. Ring zwischen Schiersteiner Straße und Ringkirche\",\n        37122: \"1. Ring zwischen Ringkirche und Sedanplatz\",\n        37123: \"Seerobenstraße zwischen Sedanplatz und Dürerplatz\",\n        36347: null,\n    },\n    \"D01-50414\": { // B54 Aarstraße, 1. Ring, Berliner Straße\n        24314: null,\n        37120: \"1. Ring zwischen Mainzer Straße und Berliner Straße\",\n        24315: \"1. Ring zwischen Biebricher Allee und Mainzer Straße\",\n        37121: \"1. Ring zwischen Schiersteiner Straße und Biebricher Allee\",\n        24316: \"1. Ring zwischen Ringkirche und Schiersteiner Straße\",\n        36710: \"1. Ring zwischen Sedanplatz und Ringkirche\",\n        37122: \"Seerobenstraße zwischen Dürerplatz und Sedanplatz\",\n        37123: null,\n        36347: null,\n    },\n    \"D01+50529\": { // B417 stadtauswärts\n        37381: null,\n        37036: \"Unter den Eichen/Schützenstraße/Dürer-Straße Richtung Nordfriedhof\",\n        26094: null\n    },\n    \"D01-50529\": { // B417 stadteinwärts\n        37381: null,\n        37036: null,\n        26094: \"Unter den Eichen/Schützenstraße/Dürer-Straße Richtung Dürerplatz\"\n    },\n    \"D01+37364\": { // B263 Mainzer Straße stadtauswärts\n        37365: null,\n        37366: \"Mainzer Straße zwischen 1. Ring und 2. Ring\",\n        37367: null\n    },\n    \"D01-37364\": { // B263 Mainzer Straße stadteinwärts\n        37365: \"Mainzer Straße zwischen 2. Ring und 1. Ring\",\n        37366: \"Mainzer Straße zwischen A66 und 2. Ring\",\n        37367: null\n    },\n    \"D01+36353\": { // 2. Ring Dürerplatz -> Biebricher Allee\n        36354: \"2. Ring zwischen Dürerplatz und Waterloostraße\",\n        36355: \"2. Ring zwischen Waterloostraße und Klarenthaler Straße\",\n        36356: \"2. Ring zwischen Klarenthaler Straße und Dotzheimer Straße\",\n        36357: \"2. Ring zwischen Dotzheimer Straße und Schiersteiner Straße\",\n        36358: \"2. Ring zwischen Schiersteiner Straße und Biebricher Allee\",\n    },\n    \"D01-36353\": { // 2. Ring Biebricher Allee -> Dürerplatz\n        36354: \"2. Ring zwischen Klarenthaler Straße und Dürerplatz\",\n        36355: \"2. Ring zwischen Dotzheimer Straße und Klarenthaler Straße\",\n        36356: \"2. Ring zwischen Schiersteiner Straße und Dotzheimer Straße\",\n        36357: \"2. Ring zwischen Biebricher Allee und Schiersteiner Straße\",\n        36358: null,\n    },\n    \"D01+36343\": { // Schiersteiner Straße stadteinwärts\n        36344: null,\n        36345: \"Schiersteiner Straße zwischen Waldstraße und 2. Ring\",\n        36346: \"Schiersteiner Straße zwischen 2. Ring und 1. Ring\",\n    },\n    \"D01-36343\": { // Schiersteiner Straße stadtauswärts\n        36344: \"Schiersteiner Straße zwischen 2. Ring und Waldstraße\",\n        36345: \"Schiersteiner Straße zwischen 1. Ring und 2. Ring\",\n        36346: null,\n    },\n    \"D01+36317\": { // Biebricher Allee stadtauswärts\n        36318: null,\n        36319: \"Biebricher Allee zwischen 1. Ring und 2. Ring\",\n        36320: \"Biebricher Allee zwischen 2. Ring und A66\",\n    },\n    \"D01-36317\": { // Biebricher Allee stadteinwärts\n        36318: \"Biebricher Allee zwischen 2. Ring und 1. Ring\",\n        36319: \"Biebricher Allee zwischen A66 und 2. Ring\",\n        36320: \"Biebricher Allee zwischen Äppelallee und A66\",\n    },\n    \"D01+36323\": { //\"K647\" West -> Ost\n        36324: null,\n        36325: \"Lahnstraße zwischen Dürerplatz und Klarenthaler Straße\",\n        36326: \"Emser Straße zwischen Dürerplatz und Schwalbacher Straße\",\n        36327: \"Webergasse/Coulinstraße zwischen Schwalbacher Straße und Wilhelmstraße\",\n        36328: \"Wilhelmstraße zwischen Staatstheater und Kureck\",\n        36329: \"Sonnenberger Straße zwischen Wilhelmstraße und In der Dietenmühle\",\n        36330: \"Danziger Straße zwischen In der Dietenmühle und Sonnenberg\",\n    },\n    \"D01-36323\": { //\"K647\" Ost -> West\n        36324: \"Lahnstraße zwischen Dürerplatz und Klarenthaler Straße\",\n        36325: \"Emser Straße zwischen Schwalbacher Straße und Dürerplatz\",\n        36326: \"Webergasse/Coulinstraße zwischen Wilhelmstraße und Schwalbacher Straße\",\n        36327: \"Wilhelmstraße zwischen Kureck und Staatstheater\",\n        36328: \"Sonnenberger Straße zwischen In der Dietenmühle und Wilhelmstraße\",\n        36329: \"Danziger Straße zwischen Sonnenberg und In der Dietenmühle\",\n        36330: null,\n    },\n    \"D01-37369\": { //\"L3037\" Ost -> West\n        37373: \"Klarenthaler Straße zwischen 2. Ring und Lahnstraße\",\n        37374: \"Klarenthaler Straße zwischen Ringkirche und 2. Ring\",\n        37375: \"Rheinstraße zwischen Oranienstraße und Ringkirche\",\n        37376: \"Rheinstraße zwischen Friedrich-Ebert-Allee und Oranienstraße\",\n        37377: \"Rheinstraße zwischen Frankfurter Straße und Friedrich-Ebert-Allee\",\n        37378: \"Frankfurter Straße zwischen Stadion und Rheinstraße\",\n        37379: null,\n        37380: null,\n    },\n    \"D01+37369\": { //\"L3037\" West -> Ost\n        37373: null,\n        37374: \"Klarenthaler Straße zwischen Lahnstraße und 2. Ring\",\n        37375: \"Klarenthaler Straße zwischen 2. Ring und Ringkirche\",\n        37376: \"Rheinstraße zwischen Ringkirche und Oranienstraße\",\n        37377: \"Rheinstraße zwischen Oranienstraße und Friedrich-Ebert-Allee\",\n        37378: \"Rheinstraße zwischen Friedrich-Ebert-Allee und Frankfurter Straße\",\n        37379: \"Frankfurter Straße zwischen Rheinstraße und Stadion\",\n        37380: null,\n    },\n}\n\nfunction isValid(roadWay, flowItem) {\n    if (flowItem.CF[0].SU <= SPEED_LIMIT) {\n        return false;\n    }\n    if (flowItem.CF[0].CN <= CONFIDENCE_LIMIT) {\n        return false;\n    }\n    if (!Object.keys(rules).includes(roadWay.LI)) {\n        console.log('Unknown/excluded road ' + roadWay.LI);\n        return false;\n    }\n    if (rules[roadWay.LI][flowItem.TMC.PC] === undefined || rules[roadWay.LI][flowItem.TMC.PC] === null) {\n        console.log('Unknown/excluded segment ' + roadWay.LI + '/' + flowItem.TMC.PC);\n        return false;\n    }\n    return true;\n}\n\nlet data = [];\nfor (let roadWay of items[0].json.RWS[0].RW) {\n    for (let flowItem of roadWay.FIS[0].FI) {\n        if (!isValid(roadWay, flowItem)) {\n            continue;\n        }\n        let timeOutput = new Date(Date.parse(roadWay.PBT));\n        data.push({\n            json: {\n                name: flowItem.TMC.DE,\n                speed: flowItem.CF[0].SU,\n                parent_name: roadWay.DE,\n                road_id: roadWay.LI,\n                tmc_id: flowItem.TMC.PC,\n                time: timeOutput.toLocaleString('de-DE', dateTimeOptions),\n                description: rules[roadWay.LI][flowItem.TMC.PC]\n            }\n        });\n    }\n}\n\nreturn data;\n"
+        "functionCode": "const SPEED_LIMIT = 55;\nconst CONFIDENCE_LIMIT = 0.7;\nconst dateTimeOptions = {\n    timeZone: \"Europe/Berlin\",\n    hour: \"numeric\",\n    minute: \"numeric\",\n    day: \"numeric\",\n    month: \"numeric\",\n    year: \"numeric\"\n}\n\nconst rules = {\n    \"D01+50414\": { // B54 Berliner Straße, 1. Ring, Aarstraße\n        24314: null,\n        37120: null,\n        24315: \"1. Ring zwischen Berliner Straße und Mainzer Straße\",\n        37121: \"1. Ring zwischen Mainzer Straße und Biebricher Allee\",\n        24316: \"1. Ring zwischen Biebricher Allee und Schiersteiner Straße\",\n        36710: \"1. Ring zwischen Schiersteiner Straße und Ringkirche\",\n        37122: \"1. Ring zwischen Ringkirche und Sedanplatz\",\n        37123: \"Seerobenstraße zwischen Sedanplatz und Dürerplatz\",\n        36347: null,\n    },\n    \"D01-50414\": { // B54 Aarstraße, 1. Ring, Berliner Straße\n        24314: null,\n        37120: \"1. Ring zwischen Mainzer Straße und Berliner Straße\",\n        24315: \"1. Ring zwischen Biebricher Allee und Mainzer Straße\",\n        37121: \"1. Ring zwischen Schiersteiner Straße und Biebricher Allee\",\n        24316: \"1. Ring zwischen Ringkirche und Schiersteiner Straße\",\n        36710: \"1. Ring zwischen Sedanplatz und Ringkirche\",\n        37122: \"Seerobenstraße zwischen Dürerplatz und Sedanplatz\",\n        37123: null,\n        36347: null,\n    },\n    \"D01+50529\": { // B417 stadtauswärts\n        37381: null,\n        37036: \"Unter den Eichen/Schützenstraße/Dürer-Straße Richtung Nordfriedhof\",\n        26094: null\n    },\n    \"D01-50529\": { // B417 stadteinwärts\n        37381: null,\n        37036: null,\n        26094: \"Unter den Eichen/Schützenstraße/Dürer-Straße Richtung Dürerplatz\"\n    },\n    \"D01+37364\": { // B263 Mainzer Straße stadtauswärts\n        37365: null,\n        37366: \"Mainzer Straße zwischen 1. Ring und 2. Ring\",\n        37367: null\n    },\n    \"D01-37364\": { // B263 Mainzer Straße stadteinwärts\n        37365: \"Mainzer Straße zwischen 2. Ring und 1. Ring\",\n        37366: \"Mainzer Straße zwischen A66 und 2. Ring\",\n        37367: null\n    },\n    \"D01+36353\": { // 2. Ring Dürerplatz -> Biebricher Allee\n        36354: \"2. Ring zwischen Dürerplatz und Waterloostraße\",\n        36355: \"2. Ring zwischen Waterloostraße und Klarenthaler Straße\",\n        36356: \"2. Ring zwischen Klarenthaler Straße und Dotzheimer Straße\",\n        36357: \"2. Ring zwischen Dotzheimer Straße und Schiersteiner Straße\",\n        36358: \"2. Ring zwischen Schiersteiner Straße und Biebricher Allee\",\n    },\n    \"D01-36353\": { // 2. Ring Biebricher Allee -> Dürerplatz\n        36354: \"2. Ring zwischen Klarenthaler Straße und Dürerplatz\",\n        36355: \"2. Ring zwischen Dotzheimer Straße und Klarenthaler Straße\",\n        36356: \"2. Ring zwischen Schiersteiner Straße und Dotzheimer Straße\",\n        36357: \"2. Ring zwischen Biebricher Allee und Schiersteiner Straße\",\n        36358: null,\n    },\n    \"D01+36343\": { // Schiersteiner Straße stadteinwärts\n        36344: null,\n        36345: \"Schiersteiner Straße zwischen Waldstraße und 2. Ring\",\n        36346: \"Schiersteiner Straße zwischen 2. Ring und 1. Ring\",\n    },\n    \"D01-36343\": { // Schiersteiner Straße stadtauswärts\n        36344: \"Schiersteiner Straße zwischen 2. Ring und Waldstraße\",\n        36345: \"Schiersteiner Straße zwischen 1. Ring und 2. Ring\",\n        36346: null,\n    },\n    \"D01+36317\": { // Biebricher Allee stadtauswärts\n        36318: null,\n        36319: \"Biebricher Allee zwischen 1. Ring und 2. Ring\",\n        36320: \"Biebricher Allee zwischen 2. Ring und A66\",\n    },\n    \"D01-36317\": { // Biebricher Allee stadteinwärts\n        36318: \"Biebricher Allee zwischen 2. Ring und 1. Ring\",\n        36319: \"Biebricher Allee zwischen A66 und 2. Ring\",\n        36320: \"Biebricher Allee zwischen Äppelallee und A66\",\n    },\n    \"D01+36323\": { //\"K647\" West -> Ost\n        36324: null,\n        36325: \"Lahnstraße zwischen Dürerplatz und Klarenthaler Straße\",\n        36326: \"Emser Straße zwischen Dürerplatz und Schwalbacher Straße\",\n        36327: \"Webergasse/Coulinstraße zwischen Schwalbacher Straße und Wilhelmstraße\",\n        36328: \"Wilhelmstraße zwischen Staatstheater und Kureck\",\n        36329: \"Sonnenberger Straße zwischen Wilhelmstraße und In der Dietenmühle\",\n        36330: \"Danziger Straße zwischen In der Dietenmühle und Sonnenberg\",\n    },\n    \"D01-36323\": { //\"K647\" Ost -> West\n        36324: \"Lahnstraße zwischen Dürerplatz und Klarenthaler Straße\",\n        36325: \"Emser Straße zwischen Schwalbacher Straße und Dürerplatz\",\n        36326: \"Webergasse/Coulinstraße zwischen Wilhelmstraße und Schwalbacher Straße\",\n        36327: \"Wilhelmstraße zwischen Kureck und Staatstheater\",\n        36328: \"Sonnenberger Straße zwischen In der Dietenmühle und Wilhelmstraße\",\n        36329: \"Danziger Straße zwischen Sonnenberg und In der Dietenmühle\",\n        36330: null,\n    },\n    \"D01-37369\": { //\"L3037\" Ost -> West\n        37373: \"Klarenthaler Straße zwischen 2. Ring und Lahnstraße\",\n        37374: \"Klarenthaler Straße zwischen Ringkirche und 2. Ring\",\n        37375: \"Rheinstraße zwischen Oranienstraße und Ringkirche\",\n        37376: \"Rheinstraße zwischen Friedrich-Ebert-Allee und Oranienstraße\",\n        37377: \"Rheinstraße zwischen Frankfurter Straße und Friedrich-Ebert-Allee\",\n        37378: \"Frankfurter Straße zwischen Stadion und Rheinstraße\",\n        37379: null,\n        37380: null,\n    },\n    \"D01+37369\": { //\"L3037\" West -> Ost\n        37373: null,\n        37374: \"Klarenthaler Straße zwischen Lahnstraße und 2. Ring\",\n        37375: \"Klarenthaler Straße zwischen 2. Ring und Ringkirche\",\n        37376: \"Rheinstraße zwischen Ringkirche und Oranienstraße\",\n        37377: \"Rheinstraße zwischen Oranienstraße und Friedrich-Ebert-Allee\",\n        37378: \"Rheinstraße zwischen Friedrich-Ebert-Allee und Frankfurter Straße\",\n        37379: \"Frankfurter Straße zwischen Rheinstraße und Stadion\",\n        37380: null,\n    },\n}\n\nfunction isValid(roadWay, flowItem) {\n    if (!Object.keys(flowItem.CF[0]).includes(\"SU\")) {\n        return false;\n    }\n    if (flowItem.CF[0].SU <= SPEED_LIMIT) {\n        return false;\n    }\n    if (flowItem.CF[0].CN <= CONFIDENCE_LIMIT) {\n        return false;\n    }\n    if (!Object.keys(rules).includes(roadWay.LI)) {\n        console.log('Unknown/excluded road ' + roadWay.LI);\n        return false;\n    }\n    if (rules[roadWay.LI][flowItem.TMC.PC] === undefined || rules[roadWay.LI][flowItem.TMC.PC] === null) {\n        console.log('Unknown/excluded segment ' + roadWay.LI + '/' + flowItem.TMC.PC);\n        return false;\n    }\n    return true;\n}\n\nlet data = [];\nfor (let roadWay of items[0].json.RWS[0].RW) {\n    for (let flowItem of roadWay.FIS[0].FI) {\n        if (!isValid(roadWay, flowItem)) {\n            continue;\n        }\n        let timeOutput = new Date(Date.parse(roadWay.PBT));\n        data.push({\n            json: {\n                name: flowItem.TMC.DE,\n                speed: flowItem.CF[0].SU,\n                parent_name: roadWay.DE,\n                road_id: roadWay.LI,\n                tmc_id: flowItem.TMC.PC,\n                time: timeOutput.toLocaleString('de-DE', dateTimeOptions),\n                basetimestamp: timeOutput.toISOString().slice(0, 19).replace('T', ' '),\n                mid: roadWay.mid,\n                description: rules[roadWay.LI][flowItem.TMC.PC]\n            }\n        });\n    }\n}\n\nreturn data;\n"
       },
       "name": "Filter and transform data",
       "type": "n8n-nodes-base.function",
       "typeVersion": 1,
       "position": [
-        740,
-        280
+        760,
+        300
       ]
     },
     {
       "parameters": {
-        "text": "={{$json[\"time\"]}} Uhr: Überhöhte Geschwindkeit von {{$json[\"speed\"]}} km/h auf {{$json[\"description\"]}}\n#SpeederBot #RaserWiesbaden #WiesbadenSpeedWatch",
+        "text": "={{$json[\"speed\"]}} km/h statt 50 km/h auf {{$json[\"description\"]}}. {{$json[\"time\"]}} Uhr 🚗💨\n#SpeederBot #RaserWiesbaden #WiesbadenSpeedWatch",
         "additionalFields": {}
       },
       "name": "Twitter",
       "type": "n8n-nodes-base.twitter",
       "typeVersion": 1,
       "position": [
-        990,
-        280
+        1490,
+        530
       ],
       "credentials": {
-        "twitterOAuth1Api": "WiesbadenRaser"
+        "twitterOAuth1Api": {
+          "id": "5",
+          "name": "WiesbadenRaser"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=INSERT INTO speeders (mid, basetimestamp, speed, road_name, road_id, segment_id, segment_name, description) VALUES ('{{$json[\"mid\"]}}','{{$json[\"basetimestamp\"]}}',{{$json[\"speed\"]}},'{{$json[\"parent_name\"]}}','{{$json[\"road_id\"]}}',{{$json[\"tmc_id\"]}},'{{$json[\"name\"]}}','{{$json[\"description\"]}}');"
+      },
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1490,
+        60
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "7",
+          "name": "Maria DB 10"
+        }
       }
     }
   ],
@@ -96,12 +118,17 @@
             "node": "Twitter",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {},
-  "id": 4
+  "id": 3
 }
