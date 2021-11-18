@@ -127,6 +127,9 @@ const rules = {
 }
 
 function isValid(roadWay, flowItem) {
+    if (!Object.keys(flowItem.CF[0]).includes("SU")) {
+        return false;
+    }
     if (flowItem.CF[0].SU <= SPEED_LIMIT) {
         return false;
     }
